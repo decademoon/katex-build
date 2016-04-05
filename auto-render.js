@@ -54,9 +54,11 @@ var renderElem = function(elem, delimiters, ignoredTags) {
         var childNode = elem.childNodes[i];
         if (childNode.nodeType === 3) {
             // Text node
-            var frag = renderMathInText(childNode.textContent, delimiters);
-            i += frag.childNodes.length - 1;
-            elem.replaceChild(frag, childNode);
+            if (childNode.textContent) {
+                var frag = renderMathInText(childNode.textContent, delimiters);
+                i += frag.childNodes.length - 1;
+                elem.replaceChild(frag, childNode);
+            }
         } else if (childNode.nodeType === 1) {
             // Element node
             var shouldRender = ignoredTags.indexOf(
